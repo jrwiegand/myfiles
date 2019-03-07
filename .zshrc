@@ -37,10 +37,10 @@ alias pyserv='python -m SimpleHTTPServer 7977'
 alias jsserv='nvm use lts/* && serve'
 
 # update list of brew installed formula
-alias update-brew-list='brew ls --versions > ~/.mac-config/brew_list.txt && brew cask ls --versions > ~/.mac-config/brew_casks_list.txt'
+alias update-brew-list='brew ls --versions > ~/dotfiles/brew_list.txt && brew cask ls --versions > ~/dotfiles/brew_casks_list.txt'
 
 # install npm packages from a list
-alias install-npm-packages='cat $HOME/.mac-config/npm_global.txt | xargs npm install --global'
+alias install-npm-packages='cat $HOME/dotfiles/npm_global.txt | xargs npm install --global'
 
 # update macos
 alias update-mac-os='echo "Updating macOS..." && softwareupdate -i -a'
@@ -117,41 +117,6 @@ get-web-page() {
         | sed -n -e 's!.*<title>\(.*\)</title>.*!\1!p';
 }
 
-# note in bash
-notes() {
-    local fpath=$HOME/notes.md
-    if [ "$1" == "cat" ]; then
-        cat "$fpath"
-    elif [ "$1" == "rg" ]; then
-        rg "$2" "$fpath"
-    elif [ "$1" == "vim" ]; then
-        vim "$fpath"
-    elif [ "$1" == "--help" ]; then
-        printf 'Commands: \n-----------------------------------------------\n
-        $ notes \n
-        $ notes --help\t\t--\tdisplay this help\n
-        $ notes date\t\t--\tadd date row to notes\n
-        $ notes <text>\t\t--\tadd new entry \n
-        $ notes cat\t\t--\tprint notes using cat\n
-        $ notes rg <pattern>\t--\tripgrep notes\n
-        Remember to use #tags (for easier grepping)!\n\n'
-    elif [ "$1" == "date" ]; then
-        {
-        echo ''
-        echo '# '"$(date +"%m-%d-%Y-%T")"
-        echo '-'
-        } >> "$fpath"
-    elif [ "$1" == "" ]; then
-        less +G "$fpath"
-    else
-        {
-            echo ''
-            echo "$@"
-            echo ''
-        } >>"$fpath"
-    fi
-}
-
 # get all ec2 instances
 get-ec2-instances() {
     aws ec2 describe-instances --query 'Reservations[].Instances[].[Tags[?Key==`Name`]|[0].Value,InstanceId,InstanceType,State.Name,PublicIpAddress,PrivateIpAddress]' --output table;
@@ -186,21 +151,14 @@ export PATH="$JAVA_HOME:$PATH"
 # flutter home
 export PATH="$HOME/Library/flutter/bin:$PATH"
 
-# mariadb home
-export PATH="/usr/local/opt/mariadb@10.2/bin:$PATH"
-
 # virtualenvwrapper
 export WORKON_HOME="$HOME/.virtualenvs"
 export PROJECT_HOME="$HOME/side-projects"
 export VIRTUALENVWRAPPER_PYTHON="/usr/local/bin/python3"
-init-pyenv() {
-    source /usr/local/bin/virtualenvwrapper.sh
-}
+init-pyenv() { source /usr/local/bin/virtualenvwrapper.sh }
 
 # rbenv
-init-rbenv() {
-    eval "$(rbenv init -)"
-}
+init-rbenv() { eval "$(rbenv init -)" }
 
 #openssl
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"

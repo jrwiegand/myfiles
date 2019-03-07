@@ -1,0 +1,16 @@
+cordova@latest
+eslint@latest
+firebase-tools@latest
+gulp-cli@latest
+ionic@latest
+ios-deploy@latest
+ios-sim@latest
+mocha@latest
+npm@latest
+redis-commander@latest
+serve@latest
+serverless@latest
+tslint@latest
+typescript@latest
+uuid@latest
+vue-cli@latest
