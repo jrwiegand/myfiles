@@ -1,0 +1,1 @@
+/Users/jwiegand/.mac-config/material.vim
