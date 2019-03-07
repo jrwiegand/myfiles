@@ -36,11 +36,8 @@ alias pyserv='python -m SimpleHTTPServer 7977'
 # start a static node server
 alias jsserv='nvm use lts/* && serve'
 
-# update list of brew installed formula
-alias update-brew-list='brew ls --versions > ~/.mac-config/brew_list.txt && brew cask ls --versions > ~/.mac-config/brew_casks_list.txt'
-
 # install npm packages from a list
-alias install-npm-packages='cat $HOME/.mac-config/npm_global.txt | xargs npm install --global'
+alias install-npm-packages='cat $HOME/dotfiles/npm_global.txt | xargs npm install --global'
 
 # update macos
 alias update-os='echo "Updating macOS..." && apt update && apt upgrade && apt dist-upgrade'
@@ -126,9 +123,7 @@ check-health() {
 }
 
 # listen to youtube video
-listen-to-youtube() {
-    mpv --no-video https://www.youtube.com/watch\?v\="$1"
-}
+listen-to-youtube() { mpv --no-video https://www.youtube.com/watch\?v\="$1" }
 
 #### exports
 # default path
@@ -149,13 +144,9 @@ export PATH="$HOME/Library/flutter/bin:$PATH"
 export WORKON_HOME="$HOME/.virtualenvs"
 export PROJECT_HOME="$HOME/side-projects"
 export VIRTUALENVWRAPPER_PYTHON="/usr/local/bin/python3"
-init-pyenv() {
-    source /usr/local/bin/virtualenvwrapper.sh
-}
+init-pyenv() { source /usr/local/bin/virtualenvwrapper.sh }
 
 # rbenv
-init-rbenv() {
-    eval "$(rbenv init -)"
-}
+init-rbenv() { eval "$(rbenv init -)" }
 
 [[ -f /Users/jwiegand/.nvm/versions/node/v8.15.0/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/jwiegand/.nvm/versions/node/v8.15.0/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh
