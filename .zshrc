@@ -15,32 +15,32 @@ plugins=(
     zsh_reload
 )
 
-source $ZSH/oh-my-zsh.sh
+source "$ZSH"/oh-my-zsh.sh
 
 unsetopt correct_all
 
 #### aliases
 # be very careful with this
-alias destroy='rm -rf'
-alias sudo-destroy='sudo rm -rf'
+alias destroy="rm -rf"
+alias sudo-destroy="sudo rm -rf"
 
 # copy all!
-alias copy='cp -R'
+alias copy="cp -R"
 
 # extract the file from the tar
 alias untar="tar -zxvf"
 
 # start a static python server
-alias pyserv='python -m SimpleHTTPServer 7977'
+alias pyserv="python -m SimpleHTTPServer 7977"
 
 # start a static node server
-alias jsserv='nvm use lts/* && serve'
+alias jsserv="nvm use lts/* && serve"
 
 # update list of brew installed formula
-alias update-brew-list='brew ls --versions > ~/dotfiles/brew_list.txt && brew cask ls --versions > ~/dotfiles/brew_casks_list.txt'
+alias update-brew-list='brew ls --versions > "$HOME"/dotfiles/brew_list.txt && brew cask ls --versions > "$HOME"/dotfiles/brew_casks_list.txt'
 
 # install npm packages from a list
-alias install-npm-packages='cat $HOME/dotfiles/npm_global.txt | xargs npm install --global'
+alias install-npm-packages='cat "$HOME"/dotfiles/npm_global.txt | xargs npm install --global'
 
 # update macos
 alias update-mac-os='echo "Updating macOS..." && softwareupdate -i -a'
@@ -58,7 +58,7 @@ alias update-brew='echo "Updating brew..." && brew update && brew upgrade && bre
 alias update-brew-cask='echo "Updating brew cask..." && brew cleanup && brew cask doctor --verbose --debug && brew cask outdated --greedy --verbose --debug'
 
 # update all
-alias update-all='update-mac-os; update-pip; update-npm; update-brew; update-brew-cask'
+alias update-all="update-mac-os; update-pip; update-npm; update-brew; update-brew-cask"
 
 # did.txt
 alias did='vim +"normal Go" +"r!date" +"put_" "$HOME"/did.txt'
@@ -113,28 +113,26 @@ kill-from-port() { kill -9 $(lsof -i :"$1" -t); }
 get-web-page() {
     wget --quiet -O - "$@" \
         | paste -s -d " " \
-        | sed -n -e 's!.*<head[^>]*>\(.*\)</head>.*!\1!p' \
-        | sed -n -e 's!.*<title>\(.*\)</title>.*!\1!p';
+        | sed -n -e "s!.*<head[^>]*>\(.*\)</head>.*!\1!p" \
+        | sed -n -e "s!.*<title>\(.*\)</title>.*!\1!p";
 }
 
 # get all ec2 instances
 get-ec2-instances() {
-    aws ec2 describe-instances --query 'Reservations[].Instances[].[Tags[?Key==`Name`]|[0].Value,InstanceId,InstanceType,State.Name,PublicIpAddress,PrivateIpAddress]' --output table;
+    aws ec2 describe-instances --query "Reservations[].Instances[].[Tags[?Key==`Name`]|[0].Value,InstanceId,InstanceType,State.Name,PublicIpAddress,PrivateIpAddress]" --output table;
 }
 
 # check target group health
 check-health() {
-    for arn in $(aws elbv2 describe-target-groups --query 'TargetGroups[*].TargetGroupArn' --output text)
+    for arn in "$(aws elbv2 describe-target-groups --query "TargetGroups[*].TargetGroupArn" --output text)"
     do
         echo "$arn"
-        aws elbv2 describe-target-health --target-group-arn "$arn" --query 'TargetHealthDescriptions[*].[Target.Id,TargetHealth.State]';
+        aws elbv2 describe-target-health --target-group-arn "$arn" --query "TargetHealthDescriptions[*].[Target.Id,TargetHealth.State]";
     done
 }
 
 # listen to youtube video
-listen-to-youtube() {
-    mpv --no-video https://www.youtube.com/watch\?v\="$1"
-}
+listen-to-youtube() { mpv --no-video https://www.youtube.com/watch\?v\="$1" }
 
 #### exports
 # default path
@@ -142,7 +140,7 @@ export PATH="/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 # android
 export ANDROID_HOME="$HOME/Library/Android/sdk"
-export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$PATH
+export PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$PATH"
 
 # java home
 export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
