@@ -42,8 +42,8 @@ alias update-brew-list='brew ls --versions > "$HOME"/dotfiles/brew_list.txt && b
 # install npm packages from a list
 alias install-npm-packages='cat "$HOME"/dotfiles/npm_global.txt | xargs npm install --global'
 
-# update macos
-alias update-mac-os='echo "Updating macOS..." && softwareupdate -i -a'
+# update os
+alias update-os='echo "Updating macOS..." && softwareupdate -i -a'
 
 # update pip
 alias update-pip='echo "Updating pip..." && pip3 freeze --local | grep -v "^\-e" | cut -d = -f 1  | xargs -n1 pip3 install -U'
@@ -58,7 +58,7 @@ alias update-brew='echo "Updating brew..." && brew update && brew upgrade && bre
 alias update-brew-cask='echo "Updating brew cask..." && brew cleanup && brew cask doctor --verbose --debug && brew cask outdated --greedy --verbose --debug'
 
 # update all
-alias update-all="update-mac-os; update-pip; update-npm; update-brew; update-brew-cask"
+alias update-all="update-os; update-pip; update-npm; update-brew; update-brew-cask"
 
 # did.txt
 alias did='vim +"normal Go" +"r!date" +"put_" "$HOME"/did.txt'
