@@ -164,4 +164,3 @@ export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 # homebrew
 HOMEBREW_NO_ANALYTICS=1
 
-[[ -f /Users/jwiegand/.nvm/versions/node/v8.15.0/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/jwiegand/.nvm/versions/node/v8.15.0/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh
