@@ -101,10 +101,10 @@ reset-db() { dropdb "$1" && createdb "$1" && psql "$1" -f "$2"; }
 new-db() { createdb "$1" && psql "$1" -f "$2"; }
 
 # get ip information
-ip-info() { curl ipinfo.io/"$1"; }
+get-ip-info() { curl ipinfo.io/"$1"; }
 
 # get weather updates
-weather-info() { curl -s -N http://wttr.in/"$1"; }
+get-weather() { curl -s -N http://wttr.in/"$1"; }
 
 # kill a process based on the port number
 kill-from-port() { kill -9 $(lsof -i :"$1" -t); }
