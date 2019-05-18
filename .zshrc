@@ -146,9 +146,6 @@ export PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$PATH"
 export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
 export PATH="$JAVA_HOME:$PATH"
 
-# flutter home
-export PATH="$HOME/Library/flutter/bin:$PATH"
-
 # virtualenvwrapper
 export WORKON_HOME="$HOME/.virtualenvs"
 export PROJECT_HOME="$HOME/side-projects"
