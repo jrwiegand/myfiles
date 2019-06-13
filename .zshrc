@@ -24,6 +24,9 @@ unsetopt correct_all
 alias destroy="rm -rf"
 alias sudo-destroy="sudo rm -rf"
 
+# replace vim with neovim
+alias vim="nvim"
+
 # copy all!
 alias copy="cp -R"
 
@@ -37,10 +40,10 @@ alias pyserv="python -m SimpleHTTPServer 7977"
 alias jsserv="nvm use lts/* && serve"
 
 # update list of brew installed formula
-alias update-brew-list='brew ls --versions > "$HOME"/dotfiles/brew_list.txt && brew cask ls --versions > "$HOME"/dotfiles/brew_casks_list.txt'
+alias update-brew-list='brew ls --versions > "$HOME"/dotfiles/brew.txt && brew cask ls --versions > "$HOME"/dotfiles/brew-casks.txt'
 
 # install npm packages from a list
-alias install-npm-packages='cat "$HOME"/dotfiles/npm_global.txt | xargs npm install --global'
+alias install-npm-packages='cat "$HOME"/dotfiles/npm.txt | xargs npm install --global'
 
 # update os
 alias update-os='echo "Updating macOS..." && softwareupdate -i -a'
@@ -161,3 +164,13 @@ export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 # homebrew
 HOMEBREW_NO_ANALYTICS=1
 
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /Users/jwiegand/.nvm/versions/node/v8.16.0/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/jwiegand/.nvm/versions/node/v8.16.0/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /Users/jwiegand/.nvm/versions/node/v8.16.0/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/jwiegand/.nvm/versions/node/v8.16.0/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh
+# tabtab source for slss package
+# uninstall by removing these lines or running `tabtab uninstall slss`
+[[ -f /Users/jwiegand/.nvm/versions/node/v8.16.0/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/jwiegand/.nvm/versions/node/v8.16.0/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh

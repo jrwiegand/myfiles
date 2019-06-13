@@ -2,7 +2,6 @@ set nocompatible                      " Make Vim more useful
 colorscheme material                  " Set color scheme!
 set clipboard=unnamed                 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
 set wildmenu                          " Enhance command-line completion
-set esckeys                           " Allow cursor keys in insert mode
 set backspace=indent,eol,start        " Allow backspace in insert mode
 set ttyfast                           " Optimize for fast terminal connections
 set gdefault                          " Add the g flag to search/replace by default
@@ -64,3 +63,7 @@ if has("autocmd")
   filetype on " Enable file type detection
   autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript " Treat .json files as .js
 endif
+
+let g:python_host_prog = "/usr/local/bin/python2"
+let g:python3_host_prog = "/usr/local/bin/python3"
+
