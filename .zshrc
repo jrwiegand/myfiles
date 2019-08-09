@@ -164,13 +164,3 @@ export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 # homebrew
 HOMEBREW_NO_ANALYTICS=1
 
-
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[[ -f /Users/jwiegand/.nvm/versions/node/v8.16.0/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/jwiegand/.nvm/versions/node/v8.16.0/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.zsh
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[[ -f /Users/jwiegand/.nvm/versions/node/v8.16.0/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/jwiegand/.nvm/versions/node/v8.16.0/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.zsh
-# tabtab source for slss package
-# uninstall by removing these lines or running `tabtab uninstall slss`
-[[ -f /Users/jwiegand/.nvm/versions/node/v8.16.0/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh ]] && . /Users/jwiegand/.nvm/versions/node/v8.16.0/lib/node_modules/serverless/node_modules/tabtab/.completions/slss.zsh

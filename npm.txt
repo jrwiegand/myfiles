@@ -1,5 +1,9 @@
-@typescript-eslint/parser@latest
+@angular/compiler@latest
+@angular/compiler-cli@latest
+@nestjs/cli@latest
 @typescript-eslint/eslint-plugin@latest
+@typescript-eslint/parser@latest
+catj@latest
 cordova@latest
 eslint@latest
 firebase-tools@latest
@@ -8,11 +12,12 @@ ionic@latest
 ios-deploy@latest
 ios-sim@latest
 mocha@latest
+neovim@latest
 npm@latest
+redis-commander@latest
 serve@latest
 serverless@latest
 standard@latest
 tslint@latest
 typescript@latest
-uuid@latest
 vue-cli@latest
