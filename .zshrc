@@ -145,10 +145,6 @@ export PATH="/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin"
 export ANDROID_HOME="$HOME/Library/Android/sdk"
 export PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$PATH"
 
-# java home
-export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
-export PATH="$JAVA_HOME:$PATH"
-
 # virtualenvwrapper
 export WORKON_HOME="$HOME/.virtualenvs"
 export PROJECT_HOME="$HOME/side-projects"
