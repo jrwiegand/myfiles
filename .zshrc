@@ -48,9 +48,6 @@ alias install-npm-packages='cat "$HOME"/dotfiles/npm.txt | xargs npm install --g
 # update os
 alias update-os='echo "Updating macOS..." && softwareupdate -i -a'
 
-# update pip
-alias update-pip='echo "Updating pip..." && pip3 freeze --local | grep -v "^\-e" | cut -d = -f 1  | xargs -n1 pip3 install -U'
-
 # update npm
 alias update-npm='echo "Updating npm..." && npm update npm -g && npm update -g'
 
@@ -61,16 +58,10 @@ alias update-brew='echo "Updating brew..." && brew update && brew upgrade && bre
 alias update-brew-cask='echo "Updating brew cask..." && brew cleanup && brew cask doctor --verbose --debug && brew cask outdated --greedy --verbose --debug'
 
 # update all
-alias update-all="update-os; update-pip; update-npm; update-brew; update-brew-cask"
+alias update-all="update-os; update-npm; update-brew; update-brew-cask"
 
 # did.txt
 alias did='vim +"normal Go" +"r!date" +"put_" "$HOME"/did.txt'
-
-# android emulator
-alias emulate-android="emulator -avd pixel-2-xl-27 &"
-
-# ios simulator
-alias simulate-ios="ios-sim start --devicetypeid com.apple.CoreSimulator.SimDeviceType.iPhone-X"
 
 #### functions
 # find all the things
@@ -112,14 +103,6 @@ get-weather() { curl -s -N http://wttr.in/"$1"; }
 # kill a process based on the port number
 kill-from-port() { kill -9 $(lsof -i :"$1" -t); }
 
-# download a page with a proper filename
-get-web-page() {
-    wget --quiet -O - "$@" \
-        | paste -s -d " " \
-        | sed -n -e "s!.*<head[^>]*>\(.*\)</head>.*!\1!p" \
-        | sed -n -e "s!.*<title>\(.*\)</title>.*!\1!p";
-}
-
 # get all ec2 instances
 get-ec2-instances() {
     aws ec2 describe-instances --query 'Reservations[].Instances[].[Tags[?Key==`Name`]|[0].Value,InstanceId,InstanceType,State.Name,PublicIpAddress,PrivateIpAddress]' --output table;
@@ -134,9 +117,6 @@ check-health() {
     done
 }
 
-# listen to youtube video
-listen-to-youtube() { mpv --no-video https://www.youtube.com/watch\?v\="$1" }
-
 #### exports
 # default path
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin"
@@ -144,15 +124,6 @@ export PATH="/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin"
 # android
 export ANDROID_HOME="$HOME/Library/Android/sdk"
 export PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$PATH"
-
-# virtualenvwrapper
-export WORKON_HOME="$HOME/.virtualenvs"
-export PROJECT_HOME="$HOME/side-projects"
-export VIRTUALENVWRAPPER_PYTHON="/usr/local/bin/python3"
-init-pyenv() { source /usr/local/bin/virtualenvwrapper.sh }
-
-# rbenv
-init-rbenv() { eval "$(rbenv init -)" }
 
 #openssl
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
