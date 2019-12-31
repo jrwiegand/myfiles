@@ -125,6 +125,9 @@ export PATH="/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin"
 export ANDROID_HOME="$HOME/Library/Android/sdk"
 export PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$PATH"
 
+# rust
+export PATH="$HOME/.cargo/bin:$PATH"
+
 #openssl
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 
