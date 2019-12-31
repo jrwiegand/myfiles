@@ -1,13 +1,5 @@
-@angular/cli@latest
-@typescript-eslint/eslint-plugin@latest
-@typescript-eslint/parser@latest
 eslint@latest
 gulp-cli@latest
-mocha@latest
-neovim@latest
 npm@latest
-serve@latest
-serverless@latest
-standard@latest
 tslint@latest
 typescript@latest
