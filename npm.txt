@@ -1,13 +1,15 @@
 @angular/cli@latest
 @typescript-eslint/eslint-plugin@latest
 @typescript-eslint/parser@latest
+cordova@latest
 eslint@latest
 gulp-cli@latest
+ionic@latest
 mocha@latest
+native-run@latest
 neovim@latest
 npm@latest
 serve@latest
 serverless@latest
 standard@latest
-tslint@latest
 typescript@latest

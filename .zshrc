@@ -122,10 +122,23 @@ check-health() {
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 # android
-export ANDROID_HOME="$HOME/Library/Android/sdk"
-export PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$PATH"
+export ANDROID_SDK_ROOT="$HOME/Library/Android/sdk"
+# avdmanager, sdkmanager
+export PATH="$PATH:$ANDROID_SDK_ROOT/tools/bin"
 
-#openssl
+# adb, logcat
+export PATH="$PATH:$ANDROID_SDK_ROOT/platform-tools"
+
+# emulator
+export PATH="$PATH:$ANDROID_SDK_ROOT/emulator"
+
+# ruby
+export PATH="$HOME/.rbenv/shims:$PATH"
+
+# rust
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# openssl
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 
 # homebrew
