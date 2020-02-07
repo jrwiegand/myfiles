@@ -7,7 +7,7 @@ HIST_STAMPS="yyyy.mm.dd"
 export ZSH=$HOME/.oh-my-zsh
 export UPDATE_ZSH_DAYS=7
 export NVM_LAZY_LOAD=true
-export DOT_FILES_DIR="$(dirname $(readlink "$0"))"
+export DOT_FILES_DIR="$(dirname $(readlink "$HOME"/.zshrc))"
 
 plugins=(
     history-substring-search
