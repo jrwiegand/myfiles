@@ -7,6 +7,7 @@ HIST_STAMPS="yyyy.mm.dd"
 export ZSH=$HOME/.oh-my-zsh
 export UPDATE_ZSH_DAYS=7
 export NVM_LAZY_LOAD=true
+export DOT_FILES_DIR="$(dirname $(readlink "$0"))"
 
 plugins=(
     history-substring-search
@@ -40,76 +41,76 @@ alias pyserv="python -m SimpleHTTPServer 7977"
 alias jsserv="nvm use lts/* && serve"
 
 # update list of brew installed formula
-alias update-brew-list='brew ls --versions > "$HOME"/dotfiles/brew.txt && brew cask ls --versions > "$HOME"/dotfiles/brew-casks.txt'
+alias update_brew_list='brew ls --versions > "$DOT_FILES_DIR"/brew.txt && brew cask ls --versions > "$DOT_FILES_DIR"/brew-casks.txt'
 
 # install npm packages from a list
-alias install-npm-packages='cat "$HOME"/dotfiles/npm.txt | xargs npm install --global'
+alias install_npm_packages='cat "$DOT_FILES_DIR"/npm.txt | xargs npm install --global'
 
 # update os
-alias update-os='echo "Updating macOS..." && softwareupdate -i -a'
+alias update_os='echo "Updating macOS..." && softwareupdate -i -a'
 
 # update npm
-alias update-npm='echo "Updating npm..." && npm update npm -g && npm update -g'
+alias update_npm='echo "Updating npm..." && npm update npm -g && npm update -g'
 
 # update brew
-alias update-brew='echo "Updating brew..." && brew update && brew upgrade && brew cleanup && brew doctor --verbose --debug'
+alias update_brew='echo "Updating brew..." && brew update && brew upgrade && brew cleanup && brew doctor --verbose --debug'
 
 # update brew cask
-alias update-brew-cask='echo "Updating brew cask..." && brew cleanup && brew cask doctor --verbose --debug && brew cask outdated --greedy --verbose --debug'
+alias update_brew_cask='echo "Updating brew cask..." && brew cleanup && brew cask doctor --verbose --debug && brew cask outdated --greedy --verbose --debug'
 
 # update all
-alias update-all="update-os; update-npm; update-brew; update-brew-cask"
+alias update_all="update_os; update_npm; update_brew; update_brew_cask"
 
 # did.txt
 alias did='vim +"normal Go" +"r!date" +"put_" "$HOME"/did.txt'
 
 #### functions
 # find all the things
-sudo-search-for-file() { sudo find "$1" -iname "$2"; }
-search-for-file() { find "$1" -iname "$2"; }
+sudo_search_for_file() { sudo find "$1" -iname "$2"; }
+search_for_file() { find "$1" -iname "$2"; }
 
 # find all the things in files
-sudo-search-for-string() { sudo rg -F -i -p "$1" "$2"; }
-search-for-string() { rg -F -i -p "$1" "$2"; }
+sudo_search_for_string() { sudo rg -F -i -p "$1" "$2"; }
+search_for_string() { rg -F -i -p "$1" "$2"; }
 
 # delete all files with this name
-sudo-destroy-all-files() { sudo find / -name "$1" -type f -delete; }
-destroy-all-files() { find ~/ -name "$1" -type f -delete; }
+sudo_destroy_all_files() { sudo find / -name "$1" -type f -delete; }
+destroy_all_files() { find ~/ -name "$1" -type f -delete; }
 
 # change the owner of the database by replacing all the instances with sed
-change-db-owner(){
+change_db_owner(){
     find "$1" -type f -exec sed -i "" "s/ Owner: $2/  Owner: $3/g" {} \;
     find "$1" -type f -exec sed -i "" "s/ $2;/ $3;/g" {} \;
 }
 
 # edit file or files with sed
-edit-file(){ find "$1" -type f -exec sed -i "" "s/$2/$3/g" {} \; }
+edit_file(){ find "$1" -type f -exec sed -i "" "s/$2/$3/g" {} \; }
 
 # edit file that requires root permission
-sudo-edit-file() { sudo find "$1" -type f -exec sed -i "" "s/$2/$3/g" {} \; }
+sudo_edit_file() { sudo find "$1" -type f -exec sed -i "" "s/$2/$3/g" {} \; }
 
 # psql function to clear the database to a usable state
-reset-db() { dropdb "$1" && createdb "$1" && psql "$1" -f "$2"; }
+reset_db() { dropdb "$1" && createdb "$1" && psql "$1" -f "$2"; }
 
 # psql function to create a new db with the given .sql file
-new-db() { createdb "$1" && psql "$1" -f "$2"; }
+new_db() { createdb "$1" && psql "$1" -f "$2"; }
 
 # get ip information
-get-ip-info() { curl ipinfo.io/"$1"; }
+get_ip_info() { curl ipinfo.io/"$1"; }
 
 # get weather updates
-get-weather() { curl -s -N http://wttr.in/"$1"; }
+get_weather() { curl -s -N http://wttr.in/"$1"; }
 
 # kill a process based on the port number
-kill-from-port() { kill -9 $(lsof -i :"$1" -t); }
+kill_from_port() { kill -9 $(lsof -i :"$1" -t); }
 
 # get all ec2 instances
-get-ec2-instances() {
+get_ec2_instances() {
     aws ec2 describe-instances --query 'Reservations[].Instances[].[Tags[?Key==`Name`]|[0].Value,InstanceId,InstanceType,State.Name,PublicIpAddress,PrivateIpAddress]' --output table;
 }
 
 # check target group health
-check-health() {
+check_health() {
     for arn in "$(aws elbv2 describe-target-groups --query "TargetGroups[*].TargetGroupArn" --output text)"
     do
         echo "$arn"
@@ -143,4 +144,3 @@ export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 
 # homebrew
 HOMEBREW_NO_ANALYTICS=1
-
