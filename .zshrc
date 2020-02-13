@@ -5,7 +5,7 @@ COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="yyyy.mm.dd"
 HOMEBREW_NO_ANALYTICS=1
 
-export ZSH=$HOME/.oh-my-zsh
+export ZSH="$HOME"/.oh-my-zsh
 export UPDATE_ZSH_DAYS=7
 export NVM_LAZY_LOAD=true
 export DOT_FILES_DIR="$(dirname $(readlink "$HOME"/.zshrc))"
@@ -117,6 +117,12 @@ check_health() {
         echo "$arn"
         aws elbv2 describe-target-health --target-group-arn "$arn" --query "TargetHealthDescriptions[*].[Target.Id,TargetHealth.State]";
     done
+}
+
+# download font from nerd fonts
+download_font() {
+    http --download https://github.com/ryanoasis/nerd-fonts/releases/latest/download/"$1".zip
+    unzip -d "$HOME"/Library/Fonts "$1".zip
 }
 
 #### exports
