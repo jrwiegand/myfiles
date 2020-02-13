@@ -3,6 +3,7 @@ ZSH_THEME="ys"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="yyyy.mm.dd"
+HOMEBREW_NO_ANALYTICS=1
 
 export ZSH=$HOME/.oh-my-zsh
 export UPDATE_ZSH_DAYS=7
@@ -23,7 +24,7 @@ unsetopt correct_all
 #### aliases
 # be very careful with this
 alias destroy="rm -rf"
-alias sudo-destroy="sudo rm -rf"
+alias sudo_destroy="sudo rm -rf"
 
 # replace vim with neovim
 alias vim="nvim"
@@ -38,7 +39,7 @@ alias untar="tar -zxvf"
 alias pyserv="python -m SimpleHTTPServer 7977"
 
 # start a static node server
-alias jsserv="nvm use lts/* && serve"
+alias jsserv="serve"
 
 # update list of brew installed formula
 alias update_brew_list='brew ls --versions > "$DOT_FILES_DIR"/brew.txt && brew cask ls --versions > "$DOT_FILES_DIR"/brew-casks.txt'
@@ -141,6 +142,3 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 # openssl
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
-
-# homebrew
-HOMEBREW_NO_ANALYTICS=1
