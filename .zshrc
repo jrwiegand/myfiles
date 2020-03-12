@@ -146,5 +146,9 @@ export PATH="$HOME/.rbenv/shims:$PATH"
 # rust
 export PATH="$HOME/.cargo/bin:$PATH"
 
+#composer
+export PATH="$HOME/.composer/vendor/bin:$PATH"
+
 # openssl
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+
