@@ -1,183 +1,225 @@
-// Preferences
 Phoenix.set({
     daemon: true,
     openAtLogin: true,
 });
 
-// Fractions
-const ONE_EIGHTH = 1 / 8;
-const ONE_QUARTER = 1 / 4;
-const ONE_THIRD = 1 / 3;
-const ONE_HALF = 1 / 2;
-
-// Key Combinations
-const CONTROL_SHIFT = ['control', 'shift'];
-const CONTROL_OPTION_COMMAND = ['control', 'option', 'command'];
-
-// Relative Directions
-const LEFT = 'left';
-const RIGHT = 'right';
-const UP = 'up';
-const DOWN = 'down';
-const CENTER = 'center';
-const FULL = 'full';
-
-// Cardinal Directions
-const NW = 'nw';
-const NE = 'ne';
-const SE = 'se';
-const SW = 'sw';
-
-class LocalWindow {
-    constructor(window) {
-        this.window = window;
-        this.frame = window.frame();
-        this.parent = window.screen().flippedVisibleFrame();
-    }
-
-    // Set frame
-    set() {
-        const { window, frame } = this;
-        window.setFrame(frame);
-        this.frame = window.frame();
-        return this;
-    }
-
-    move(placement) {
-        const { frame, parent } = this;
-        const topBar = parent.y;
-        let newFrame = {
-            height: parent.height,
-            width: parent.width,
-            x: parent.x,
-            y: parent.y
-        }
-
-        if (placement === LEFT) {
-            newFrame.width = parent.width * ONE_HALF;
-        } else if (placement === RIGHT) {
-            newFrame.width = parent.width * ONE_HALF;
-            newFrame.x = parent.width * ONE_HALF;
-        } else if (placement === UP) {
-            newFrame.height = parent.height * ONE_HALF;
-        } else if (placement === DOWN) {
-            newFrame.height = parent.height * ONE_HALF;
-            newFrame.y = (parent.height * ONE_HALF) + topBar;
-        } else if (placement === NW) {
-            newFrame.height = parent.height * ONE_HALF;
-            newFrame.width = parent.width * ONE_HALF;
-        } else if (placement === NE) {
-            newFrame.height = parent.height * ONE_HALF;
-            newFrame.width = parent.width * ONE_HALF;
-            newFrame.x = parent.width * ONE_HALF;
-        } else if (placement === SW) {
-            newFrame.height = parent.height * ONE_HALF;
-            newFrame.width = parent.width * ONE_HALF;
-            newFrame.y = (parent.height * ONE_HALF) + topBar;
-        } else if (placement === SE) {
-            newFrame.height = parent.height * ONE_HALF;
-            newFrame.width = parent.width * ONE_HALF;
-            newFrame.x = parent.width * ONE_HALF;
-            newFrame.y = (parent.height * ONE_HALF) + topBar;
-        } else if (placement === CENTER) {
-            newFrame.height = parent.height * ONE_QUARTER * 3;
-            newFrame.width = parent.width * ONE_QUARTER * 3;
-            newFrame.x = parent.width * ONE_EIGHTH;
-            newFrame.y = (parent.height * ONE_EIGHTH) + topBar;
-        }
-
-        if (this.hasChange(newFrame)) {
-            frame.height = newFrame.height;
-            frame.width = newFrame.width;
-            frame.x = newFrame.x;
-            frame.y = newFrame.y;
-        }
-
-        return this;
-    }
-
-    hasChange(newFrame) {
-        const { frame } = this;
-        return newFrame.height !== frame.height ||
-            newFrame.width !== frame.width ||
-            newFrame.x !== frame.x ||
-            newFrame.y !== frame.y;
-    }
-}
-
-// Window prototypes
-Window.prototype.move = function (placement) {
-    const window = new LocalWindow(this);
-    window.move(placement).set();
+// constants
+const combos = {
+    two: ['control', 'shift'],
+    three: ['control', 'option', 'command']
 };
 
-// Key Bindings
-Key.on(LEFT, CONTROL_OPTION_COMMAND, () => {
+const orientations = {
+    both: 'both',
+    horizontal: 'horizontal',
+    vertical: 'vertical',
+};
+
+const directions = {
+    center: 'center',
+    full: 'full',
+    ne: 'ne',
+    nw: 'nw',
+    se: 'se',
+    sw: 'sw',
+};
+
+const sizes = {
+    eighth: 1 / 8,
+    quarter: 1 / 4,
+    third: 1 / 3,
+    half: 1 / 2,
+};
+
+let cache = [];
+
+// prototypes
+Window.prototype.setWindowFrame = function (location) {
+    const parent = this.screen().flippedVisibleFrame();
+    const id = this.hash();
+    let sizeIndex = 0;
+    let newFrame = {
+        y: null,
+        x: null,
+        width: null,
+        height: null,
+    };
+
+    let lastLocation = cache.find((window) => {
+        return this.hash() === window.id;
+    });
+
+    if (lastLocation && ++lastLocation.sizeIndex < location.sizes.length) {
+        sizeIndex = lastLocation.sizeIndex;
+    }
+
+    let item = {
+        id: id,
+        sizeIndex: sizeIndex,
+        orientation: location.orientation,
+        point: location.point,
+    };
+
+    cache = cache.filter((window) => {
+        return window.id !== id;
+    });
+
+    cache.push(item);
+
+    const size = location.sizes[sizeIndex];
+
+    switch (location.orientation) {
+        case orientations.vertical:
+            newFrame.width = Math.floor(parent.width * size);
+            newFrame.height = parent.height;
+            break;
+        case orientations.horizontal:
+            newFrame.width = parent.width;
+            newFrame.height = Math.floor(parent.height * size);
+            break;
+        case orientations.both:
+            newFrame.width = Math.floor(parent.width * size);
+            newFrame.height = Math.floor(parent.height * size);
+            break;
+        default:
+            newFrame.width = parent.width;
+            newFrame.height = parent.height;
+            break;
+    }
+
+    switch (location.point) {
+        case directions.nw:
+            newFrame.y = parent.y;
+            newFrame.x = parent.x;
+            break;
+        case directions.ne:
+            newFrame.y = parent.y;
+            newFrame.x = parent.width - newFrame.width;
+            break;
+        case directions.sw:
+            newFrame.y = parent.y + parent.height - newFrame.height;
+            newFrame.x = parent.x;
+            break;
+        case directions.se:
+            newFrame.y = parent.y + parent.height - newFrame.height;
+            newFrame.x = parent.width - newFrame.width;
+            break;
+        case directions.center:
+            newFrame.y = parent.y + Math.floor(parent.height * sizes.eighth);
+            newFrame.x = Math.floor(parent.width * sizes.eighth);
+            break;
+        default:
+            newFrame.y = parent.y;
+            newFrame.x = parent.x;
+            break;
+    }
+
+    this.setFrame(Object.assign(this.frame(), newFrame));
+};
+
+// bindings
+Key.on('left', combos.three, () => {
     const window = Window.focused();
     if (window) {
-        window.move(LEFT);
+        window.setWindowFrame({
+            orientation: orientations.vertical,
+            point: directions.nw,
+            sizes: [sizes.half, sizes.third, sizes.third * 2]
+        });
     }
 });
 
-Key.on(RIGHT, CONTROL_OPTION_COMMAND, () => {
+Key.on('right', combos.three, () => {
     const window = Window.focused();
     if (window) {
-        window.move(RIGHT);
+        window.setWindowFrame({
+            orientation: orientations.vertical,
+            point: directions.ne,
+            sizes: [sizes.half, sizes.third, sizes.third * 2]
+        });
     }
 });
 
-Key.on(UP, CONTROL_OPTION_COMMAND, () => {
+Key.on('up', combos.three, () => {
     const window = Window.focused();
     if (window) {
-        window.move(UP);
+        window.setWindowFrame({
+            orientation: orientations.horizontal,
+            point: directions.nw,
+            sizes: [sizes.half, sizes.third, sizes.third * 2]
+        });
     }
 });
 
-Key.on(DOWN, CONTROL_OPTION_COMMAND, () => {
+Key.on('down', combos.three, () => {
     const window = Window.focused();
     if (window) {
-        window.move(DOWN);
+        window.setWindowFrame({
+            orientation: orientations.horizontal,
+            point: directions.sw,
+            sizes: [sizes.half, sizes.third, sizes.third * 2]
+        });
     }
 });
 
-Key.on('i', CONTROL_OPTION_COMMAND, () => {
+Key.on('i', combos.three, () => {
     const window = Window.focused();
     if (window) {
-        window.move(NW);
+        window.setWindowFrame({
+            orientation: orientations.both,
+            point: directions.nw,
+            sizes: [sizes.half]
+        });
     }
 });
 
-Key.on('o', CONTROL_OPTION_COMMAND, () => {
+Key.on('o', combos.three, () => {
     const window = Window.focused();
     if (window) {
-        window.move(NE);
+        window.setWindowFrame({
+            orientation: orientations.both,
+            point: directions.ne,
+            sizes: [sizes.half]
+        });
     }
 });
 
-Key.on('k', CONTROL_OPTION_COMMAND, () => {
+Key.on('k', combos.three, () => {
     const window = Window.focused();
     if (window) {
-        window.move(SW);
+        window.setWindowFrame({
+            orientation: orientations.both,
+            point: directions.sw,
+            sizes: [sizes.half]
+        });
     }
 });
 
-Key.on('l', CONTROL_OPTION_COMMAND, () => {
+Key.on('l', combos.three, () => {
     const window = Window.focused();
     if (window) {
-        window.move(SE);
+        window.setWindowFrame({
+            orientation: orientations.both,
+            point: directions.se,
+            sizes: [sizes.half]
+        });
     }
 });
 
-Key.on('return', CONTROL_OPTION_COMMAND, () => {
+Key.on('delete', combos.three, () => {
+    const window = Window.focused();
+    if (window) {
+        window.setWindowFrame({
+            orientation: orientations.both,
+            point: directions.center,
+            sizes: [sizes.quarter * 3]
+        });
+    }
+});
+
+Key.on('return', combos.three, () => {
     const window = Window.focused();
     if (window) {
         window.maximize();
-    }
-});
-
-Key.on('delete', CONTROL_OPTION_COMMAND, () => {
-    const window = Window.focused();
-    if (window) {
-        window.move(CENTER);
     }
 });
