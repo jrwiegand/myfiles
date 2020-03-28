@@ -21,7 +21,6 @@ const SE = 'se';
 const SW = 'sw';
 
 // sizes
-const EIGHTH = 1 / 8;
 const QUARTER = 1 / 4;
 const THIRD = 1 / 3;
 const HALF = 1 / 2;
@@ -147,6 +146,7 @@ class MyWindow {
      * @param {string} position
      */
     to(position) {
+        const difference = this.difference();
         switch (position) {
             case NW:
                 this.frame.y = this.parent.y;
@@ -154,19 +154,19 @@ class MyWindow {
                 break;
             case NE:
                 this.frame.y = this.parent.y;
-                this.frame.x = this.parent.width - this.frame.width;
+                this.frame.x = difference.width;
                 break;
             case SW:
-                this.frame.y = this.parent.y + this.parent.height - this.frame.height;
+                this.frame.y = this.parent.y + difference.height;
                 this.frame.x = this.parent.x;
                 break;
             case SE:
-                this.frame.y = this.parent.y + this.parent.height - this.frame.height;
-                this.frame.x = this.parent.width - this.frame.width;
+                this.frame.y = this.parent.y + difference.height;
+                this.frame.x = difference.width;
                 break;
             case CENTER:
-                this.frame.y = this.parent.y + Math.floor(this.parent.height * EIGHTH);
-                this.frame.x = Math.floor(this.parent.width * EIGHTH);
+                this.frame.y = this.parent.y + (difference.height * HALF);
+                this.frame.x = difference.width * HALF;
                 break;
             default:
                 this.frame.y = this.parent.y;
@@ -193,7 +193,7 @@ Window.prototype.resize = function (factor) {
 Window.prototype.set = function () {
     this.chain().set();
     return this.chain();
-}
+};
 
 // To direction in screen
 Window.prototype.to = function (position) {
