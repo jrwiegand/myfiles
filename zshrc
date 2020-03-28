@@ -47,25 +47,63 @@ alias update_brew_list='brew ls --versions > "$DOT_FILES_DIR"/brew.txt && brew c
 # install npm packages from a list
 alias install_npm_packages='cat "$DOT_FILES_DIR"/npm.txt | xargs npm install --global'
 
-# update os
-alias update_os='echo "Updating macOS..." && softwareupdate -i -a'
-
-# update npm
-alias update_npm='echo "Updating npm..." && npm update npm -g && npm update -g'
-
-# update brew
-alias update_brew='echo "Updating brew..." && brew update && brew upgrade && brew cleanup && brew doctor --verbose --debug'
-
-# update brew cask
-alias update_brew_cask='echo "Updating brew cask..." && brew cleanup && brew cask doctor --verbose --debug && brew cask outdated --greedy --verbose --debug'
-
-# update all
-alias update_all="update_os; update_npm; update_brew; update_brew_cask"
-
 # did.txt
 alias did='vim +"normal Go" +"r!date" +"put_" "$HOME"/did.txt'
 
 #### functions
+# update functions
+update() {
+    while [ ! $# -eq 0 ]
+    do
+        case "$1" in
+            --all | -a)
+                all=true;;
+            --mac | -m)
+                mac=true;;
+            --npm | -n)
+                npm=true;;
+            --rust | -r)
+                rust=true;;
+            --brew | -b)
+                brew=true;;
+            --cask | -c)
+                cask=true;;
+        esac
+        shift
+    done
+
+    if [[ ! -z ${all+x} ]] || [[ ! -z ${mac+x} ]]; then
+        echo "Updating macOS..."
+        softwareupdate -i -a
+    fi
+
+    if [[ ! -z ${all+x} ]] || [[ ! -z ${npm+x} ]]; then
+        echo "Updating npm..."
+        npm update npm -g
+        npm update -g
+    fi
+
+    if [[ ! -z ${all+x} ]] || [[ ! -z ${rust+x} ]]; then
+        echo "Updating rust..."
+        rustup update
+    fi
+
+    if [[ ! -z ${all+x} ]] || [[ ! -z ${brew+x} ]]; then
+        echo "Updating brew..."
+        brew update
+        brew upgrade
+        brew cleanup
+        brew doctor --verbose --debug
+    fi
+
+    if [[ ! -z ${all+x} ]] || [[ ! -z ${cask+x} ]]; then
+        echo "Updating brew cask..."
+        brew cleanup
+        brew cask doctor --verbose --debug
+        brew cask outdated --greedy --verbose --debug
+    fi
+}
+
 # find all the things
 sudo_search_for_file() { sudo find "$1" -iname "$2"; }
 search_for_file() { find "$1" -iname "$2"; }
@@ -119,12 +157,6 @@ check_health() {
     done
 }
 
-# download font from nerd fonts
-download_font() {
-    http --download https://github.com/ryanoasis/nerd-fonts/releases/latest/download/"$1".zip
-    unzip -d "$HOME"/Library/Fonts "$1".zip
-}
-
 #### exports
 # default path
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin"
@@ -151,4 +183,3 @@ export PATH="$HOME/.composer/vendor/bin:$PATH"
 
 # openssl
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
-
