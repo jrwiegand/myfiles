@@ -57,17 +57,17 @@ update() {
     do
         case "$1" in
             --all | -a)
-                all=true;;
+                local all=true;;
             --mac | -m)
-                mac=true;;
+                local mac=true;;
             --npm | -n)
-                npm=true;;
+                local npm=true;;
             --rust | -r)
-                rust=true;;
+                local rust=true;;
             --brew | -b)
-                brew=true;;
+                local brew=true;;
             --cask | -c)
-                cask=true;;
+                local cask=true;;
         esac
         shift
     done
