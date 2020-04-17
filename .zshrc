@@ -53,42 +53,49 @@ alias did='vim +"normal Go" +"r!date" +"put_" "$HOME"/did.txt'
 #### functions
 # update functions
 update() {
+    local all=false
+    local mac=false
+    local npm=false
+    local rust=false
+    local brew=false
+    local cask=false
+
     while [ ! $# -eq 0 ]
     do
         case "$1" in
             --all | -a)
-                local all=true;;
+                all=true;;
             --mac | -m)
-                local mac=true;;
+                mac=true;;
             --npm | -n)
-                local npm=true;;
+                npm=true;;
             --rust | -r)
-                local rust=true;;
+                rust=true;;
             --brew | -b)
-                local brew=true;;
+                brew=true;;
             --cask | -c)
-                local cask=true;;
+                cask=true;;
         esac
         shift
     done
 
-    if [[ ! -z ${all+x} ]] || [[ ! -z ${mac+x} ]]; then
+    if [ "$all" = true ] || [ "$mac" = true ] ; then
         echo "Updating macOS..."
         softwareupdate -i -a
     fi
 
-    if [[ ! -z ${all+x} ]] || [[ ! -z ${npm+x} ]]; then
+    if [ "$all" = true ] || [ "$npm" = true ] ; then
         echo "Updating npm..."
         npm update npm -g
         npm update -g
     fi
 
-    if [[ ! -z ${all+x} ]] || [[ ! -z ${rust+x} ]]; then
+    if [ "$all" = true ] || [ "$rust" = true ] ; then
         echo "Updating rust..."
         rustup update
     fi
 
-    if [[ ! -z ${all+x} ]] || [[ ! -z ${brew+x} ]]; then
+    if [ "$all" = true ] || [ "$brew" = true ] ; then
         echo "Updating brew..."
         brew update
         brew upgrade
@@ -96,7 +103,7 @@ update() {
         brew doctor --verbose --debug
     fi
 
-    if [[ ! -z ${all+x} ]] || [[ ! -z ${cask+x} ]]; then
+    if [ "$all" = true ] || [ "$cask" = true ] ; then
         echo "Updating brew cask..."
         brew cleanup
         brew cask doctor --verbose --debug
