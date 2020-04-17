@@ -164,6 +164,13 @@ check_health() {
     done
 }
 
+hash_content() {
+    cat "$1" | while read line
+    do
+        echo -n "$line" | md5 >> "$1"_hashed.csv
+    done;
+}
+
 #### exports
 # default path
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin"
