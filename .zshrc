@@ -44,9 +44,6 @@ alias jsserv="serve"
 # update list of brew installed formula
 alias update_brew_list='brew ls --versions > "$DOT_FILES_DIR"/brew.txt && brew cask ls --versions > "$DOT_FILES_DIR"/brew-casks.txt'
 
-# install npm packages from a list
-alias install_npm_packages='cat "$DOT_FILES_DIR"/npm.txt | xargs npm install --global'
-
 # did.txt
 alias did='vim +"normal Go" +"r!date" +"put_" "$HOME"/did.txt'
 
@@ -55,7 +52,7 @@ alias did='vim +"normal Go" +"r!date" +"put_" "$HOME"/did.txt'
 update() {
     local all=false
     local mac=false
-    local npm=false
+    local node=false
     local rust=false
     local brew=false
     local cask=false
@@ -67,8 +64,8 @@ update() {
                 all=true;;
             --mac | -m)
                 mac=true;;
-            --npm | -n)
-                npm=true;;
+            --node | -n)
+                node=true;;
             --rust | -r)
                 rust=true;;
             --brew | -b)
@@ -84,8 +81,9 @@ update() {
         softwareupdate -i -a
     fi
 
-    if [ "$all" = true ] || [ "$npm" = true ] ; then
-        echo "Updating npm..."
+    if [ "$all" = true ] || [ "$node" = true ] ; then
+        echo "Updating node..."
+        nvm install lts/*
         npm update npm -g
         npm update -g
     fi
