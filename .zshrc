@@ -82,19 +82,19 @@ update() {
     fi
 
     if [ "$all" = true ] || [ "$node" = true ] ; then
-        echo "Updating node..."
-        nvm install lts/*
+        nvm install --lts
+        echo "\nUpdating node..."
         npm update npm -g
         npm update -g
     fi
 
     if [ "$all" = true ] || [ "$rust" = true ] ; then
-        echo "Updating rust..."
+        echo "\nUpdating rust..."
         rustup update
     fi
 
     if [ "$all" = true ] || [ "$brew" = true ] ; then
-        echo "Updating brew..."
+        echo "\nUpdating brew..."
         brew update
         brew upgrade
         brew cleanup
@@ -102,7 +102,7 @@ update() {
     fi
 
     if [ "$all" = true ] || [ "$cask" = true ] ; then
-        echo "Updating brew cask..."
+        echo "\nUpdating brew cask..."
         brew cleanup
         brew cask doctor --verbose --debug
         brew cask outdated --greedy --verbose --debug
