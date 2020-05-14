@@ -54,6 +54,7 @@ update() {
     local mac=false
     local node=false
     local rust=false
+    local php=false
     local brew=false
     local cask=false
 
@@ -68,6 +69,8 @@ update() {
                 node=true;;
             --rust | -r)
                 rust=true;;
+            --php | -r)
+                php=true;;
             --brew | -b)
                 brew=true;;
             --cask | -c)
@@ -91,6 +94,11 @@ update() {
     if [ "$all" = true ] || [ "$rust" = true ] ; then
         echo "\nUpdating rust..."
         rustup update
+    fi
+
+    if [ "$all" = true ] || [ "$php" = true ] ; then
+        echo "\nUpdating rust..."
+        composer global update
     fi
 
     if [ "$all" = true ] || [ "$brew" = true ] ; then
