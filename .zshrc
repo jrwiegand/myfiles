@@ -85,8 +85,8 @@ update() {
     fi
 
     if [ "$all" = true ] || [ "$node" = true ] ; then
-        nvm install --lts
         echo "\nUpdating node..."
+        nvm install --lts
         npm update npm -g
         npm update -g
     fi
