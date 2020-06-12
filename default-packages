@@ -5,3 +5,6 @@ gulp-cli@latest
 neovim@latest
 npm@latest
 serve@latest
+serverless@latest
+ts-node@latest
+typescript@latest
