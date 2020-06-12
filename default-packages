@@ -1,5 +1,6 @@
 @angular/cli@latest
 @ionic/cli@latest
+@vue/cli@latest
 cordova@latest
 gulp-cli@latest
 neovim@latest
