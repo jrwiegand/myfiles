@@ -22,27 +22,11 @@ source "$ZSH"/oh-my-zsh.sh
 unsetopt correct_all
 
 #### aliases
-# be very careful with this
-alias destroy="rm -rf"
-alias sudo_destroy="sudo rm -rf"
-
 # replace vim with neovim
 alias vim="nvim"
 
-# copy all!
-alias copy="cp -R"
-
 # extract the file from the tar
 alias untar="tar -zxvf"
-
-# start a static python server
-alias pyserv="python -m SimpleHTTPServer 7977"
-
-# start a static node server
-alias jsserv="serve"
-
-# update list of brew installed formula
-alias update_brew_list='brew ls --versions > "$DOT_FILES_DIR"/brew.txt && brew cask ls --versions > "$DOT_FILES_DIR"/brew-casks.txt'
 
 # did.txt
 alias did='vim +"normal Go" +"r!date" +"put_" "$HOME"/did.txt'
@@ -97,7 +81,7 @@ update() {
     fi
 
     if [ "$all" = true ] || [ "$php" = true ] ; then
-        echo "\nUpdating rust..."
+        echo "\nUpdating composer..."
         composer global update
     fi
 
