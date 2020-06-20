@@ -1,6 +1,8 @@
 @angular/cli@latest
 @ionic/cli@latest
 @vue/cli@latest
+autocannon@latest
+clinic@latest
 cordova@latest
 gulp-cli@latest
 neovim@latest
@@ -9,3 +11,4 @@ serve@latest
 serverless@latest
 ts-node@latest
 typescript@latest
+uuid@latest
