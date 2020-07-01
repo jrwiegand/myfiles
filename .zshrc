@@ -32,6 +32,9 @@ alias untar="tar -zxvf"
 ## did.txt
 alias did='vim +"normal Go" +"r!date" +"put_" "$HOME"/did.txt'
 
+## brew reinstall
+alias bcr='brew cask reinstall'
+
 # functions
 
 ## update functions
