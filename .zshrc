@@ -95,14 +95,14 @@ update() {
         brew update
         brew upgrade
         brew cleanup
-        brew doctor --verbose --debug
+        brew doctor
     fi
 
     if [ "$all" = true ] || [ "$cask" = true ] ; then
         echo "\nUpdating brew cask..."
         brew cleanup
-        brew cask doctor --verbose --debug
-        brew cask outdated --greedy --verbose --debug
+        brew cask doctor
+        brew cask outdated --greedy
     fi
 }
 
