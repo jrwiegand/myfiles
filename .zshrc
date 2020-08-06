@@ -58,7 +58,7 @@ update() {
                 node=true;;
             --rust | -r)
                 rust=true;;
-            --php | -r)
+            --php | -p)
                 php=true;;
             --brew | -b)
                 brew=true;;
@@ -193,4 +193,3 @@ export PATH="$HOME/.composer/vendor/bin:$PATH"
 
 ## openssl
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
-
