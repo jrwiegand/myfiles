@@ -45,7 +45,6 @@ update() {
     local rust=false
     local php=false
     local brew=false
-    local cask=false
 
     while [ ! $# -eq 0 ]
     do
@@ -62,8 +61,6 @@ update() {
                 php=true;;
             --brew | -b)
                 brew=true;;
-            --cask | -c)
-                cask=true;;
         esac
         shift
     done
@@ -93,16 +90,9 @@ update() {
     if [ "$all" = true ] || [ "$brew" = true ] ; then
         echo "\nUpdating brew..."
         brew update
-        brew upgrade
+        brew upgrade --greedy
         brew cleanup
         brew doctor
-    fi
-
-    if [ "$all" = true ] || [ "$cask" = true ] ; then
-        echo "\nUpdating brew cask..."
-        brew cleanup
-        brew cask doctor
-        brew cask outdated --greedy
     fi
 }
 
