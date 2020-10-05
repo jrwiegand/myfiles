@@ -1,14 +1,14 @@
 @angular/cli@latest
 @ionic/cli@latest
-@vue/cli@latest
+@nestjs/cli
 autocannon@latest
 clinic@latest
 cordova@latest
 gulp-cli@latest
 neovim@latest
 npm@latest
-serve@latest
 serverless@latest
 ts-node@latest
 typescript@latest
 uuid@latest
+yarn@latest
