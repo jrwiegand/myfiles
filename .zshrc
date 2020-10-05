@@ -32,9 +32,6 @@ alias untar="tar -zxvf"
 ## did.txt
 alias did='vim +"normal Go" +"r!date" +"put_" "$HOME"/did.txt'
 
-## brew reinstall
-alias bcr='brew cask reinstall'
-
 # functions
 
 ## update functions
@@ -98,7 +95,7 @@ update() {
 
 ## find all the things
 sf() { find "$1" -iname "$2"; }
-sfs() { sudo find "$1" -iname "$2"; }
+ssf() { sudo find "$1" -iname "$2"; }
 
 ## find all the things in files
 ss() { rg -F -i -p "$1" "$2"; }
@@ -106,11 +103,11 @@ sss() { sudo rg -F -i -p "$1" "$2"; }
 
 ## delete all files with this name
 del() { find ~/ -name "$1" -type f -delete; }
-dels() { sudo find ~/ -name "$1" -type f -delete; }
+sdel() { sudo find ~/ -name "$1" -type f -delete; }
 
 ## edit file or files with sed
 ef() { find "$1" -type f -exec sed -i "" "s/$2/$3/g" {} \; }
-efs() { sudo find "$1" -type f -exec sed -i "" "s/$2/$3/g" {} \; }
+sef() { sudo find "$1" -type f -exec sed -i "" "s/$2/$3/g" {} \; }
 
 ## function to update the owner of a psql database file
 pdbo() {
@@ -150,11 +147,23 @@ ah() {
     done
 }
 
+## hash content of the file line-by-line
 hc() {
     cat "$1" | while read line
     do
         echo -n "$line" | md5 >> "$1"_hashed.csv
     done;
+}
+
+## check status on a given url and notify
+cs() {
+    local status_result=$(curl -I -L -s "$1" | grep 200)
+    if [ -z "$status_result" ]
+    then
+
+    else
+        terminal-notifier -title "Success!" -message "Click to open URL" -open "$1"
+    fi
 }
 
 # exports
