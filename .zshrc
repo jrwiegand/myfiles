@@ -127,20 +127,17 @@ ip() { curl https://ipinfo.io/"$1"; }
 ## get crypto rates
 cr() { (IFS=+; curl https://rate.sx/"$*"; ); }
 
-## get weather
-cw() { ( IFS=+; curl https://wttr.in/"$*"; ); }
-
 ## kill a process based on the port number
 kp() { kill -9 $(lsof -i :"$1" -t); }
 
 ## get all ec2 instances
 ec2() {
-    aws ec2 describe-instances --query 'Reservations[].Instances[].[Tags[?Key==`Name`]|[0].Value,InstanceId,InstanceType,State.Name,PublicIpAddress,PrivateIpAddress]' --output table;
+    aws ec2 describe-instances --query 'Reservations[].Instances[].[Tags[?Key==`Name`]|[0].Value,InstanceId,InstanceType,State.Name,PublicIpAddress,PrivateIpAddress]' --output table --profile "$1";
 }
 
 ## check target group health
 ah() {
-    for arn in "$(aws elbv2 describe-target-groups --query "TargetGroups[*].TargetGroupArn" --output text)"
+    for arn in "$(aws elbv2 describe-target-groups --query "TargetGroups[*].TargetGroupArn" --output text --profile $1)"
     do
         echo "$arn"
         aws elbv2 describe-target-health --target-group-arn "$arn" --query "TargetHealthDescriptions[*].[Target.Id,TargetHealth.State]";
@@ -172,6 +169,7 @@ export PATH="/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 ## android
 export ANDROID_SDK_ROOT="$HOME/Library/Android/sdk"
+
 ### avdmanager, sdkmanager
 export PATH="$PATH:$ANDROID_SDK_ROOT/tools/bin"
 
@@ -180,6 +178,9 @@ export PATH="$PATH:$ANDROID_SDK_ROOT/platform-tools"
 
 ### emulator
 export PATH="$PATH:$ANDROID_SDK_ROOT/emulator"
+
+## java
+export JAVA_HOME="/usr/local/Cellar/openjdk@8/1.8.0+275/libexec/openjdk.jdk/Contents/Home"
 
 ## ruby
 export PATH="$HOME/.rbenv/shims:$PATH"
@@ -192,3 +193,4 @@ export PATH="$HOME/.composer/vendor/bin:$PATH"
 
 ## openssl
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+
