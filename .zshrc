@@ -8,7 +8,7 @@ HOMEBREW_NO_ANALYTICS=1
 export ZSH="$HOME"/.oh-my-zsh
 export UPDATE_ZSH_DAYS=7
 export NVM_LAZY_LOAD=true
-export DOT_FILES_DIR="$(dirname $(readlink "$HOME"/.zshrc))"
+export REPO_DIR="$(dirname $(readlink "$HOME"/.zshrc))"
 
 plugins=(
     history-substring-search
@@ -70,8 +70,8 @@ update() {
     if [ "$all" = true ] || [ "$node" = true ] ; then
         echo "\nUpdating node..."
         nvm install --lts
-        npm update npm -g
-        npm update -g
+        npm update npm --global
+        npm update --global
     fi
 
     if [ "$all" = true ] || [ "$rust" = true ] ; then
@@ -88,6 +88,8 @@ update() {
         echo "\nUpdating brew..."
         brew update
         brew upgrade --greedy
+	brew update --cask
+	brew upgrade --greedy --cask
         brew cleanup
         brew doctor
     fi
