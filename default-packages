@@ -4,11 +4,7 @@
 autocannon@latest
 clinic@latest
 cordova@latest
-gulp-cli@latest
 neovim@latest
 npm@latest
-serverless@latest
-ts-node@latest
 typescript@latest
-uuid@latest
 yarn@latest
