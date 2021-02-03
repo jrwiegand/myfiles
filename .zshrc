@@ -9,6 +9,7 @@ export ZSH="$HOME"/.oh-my-zsh
 export UPDATE_ZSH_DAYS=7
 export NVM_LAZY_LOAD=true
 export REPO_DIR="$(dirname $(readlink "$HOME"/.zshrc))"
+export VOLTA_HOME="$HOME"/.volta
 
 plugins=(
     history-substring-search
@@ -87,9 +88,8 @@ update() {
     if [ "$all" = true ] || [ "$brew" = true ] ; then
         echo "\nUpdating brew..."
         brew update
-        brew upgrade --greedy
-	brew update --cask
-	brew upgrade --greedy --cask
+        brew upgrade
+        brew upgrade --casks
         brew cleanup
         brew doctor
     fi
@@ -182,7 +182,7 @@ export PATH="$PATH:$ANDROID_SDK_ROOT/platform-tools"
 export PATH="$PATH:$ANDROID_SDK_ROOT/emulator"
 
 ## java
-export JAVA_HOME="/usr/local/Cellar/openjdk@8/1.8.0+275/libexec/openjdk.jdk/Contents/Home"
+export JAVA_HOME="/usr/local/Cellar/openjdk@8/1.8.0+282/libexec/openjdk.jdk/Contents/Home"
 
 ## ruby
 export PATH="$HOME/.rbenv/shims:$PATH"
@@ -196,3 +196,5 @@ export PATH="$HOME/.composer/vendor/bin:$PATH"
 ## openssl
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 
+## volta
+export PATH="$VOLTA_HOME/bin:$PATH"
