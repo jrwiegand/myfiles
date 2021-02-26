@@ -88,8 +88,7 @@ update() {
     if [ "$all" = true ] || [ "$brew" = true ] ; then
         echo "\nUpdating brew..."
         brew update
-        brew upgrade
-        brew upgrade --casks
+        brew upgrade --greedy
         brew cleanup
         brew doctor
     fi
