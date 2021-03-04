@@ -180,6 +180,9 @@ export PATH="$PATH:$ANDROID_SDK_ROOT/platform-tools"
 ### emulator
 export PATH="$PATH:$ANDROID_SDK_ROOT/emulator"
 
+### chrome/brave
+export CHROME_EXECUTABLE="/Applications/Brave Browser.app/Contents/MacOS/Brave Browser"
+
 ## java
 export JAVA_HOME="/usr/local/Cellar/openjdk@8/1.8.0+282/libexec/openjdk.jdk/Contents/Home"
 
